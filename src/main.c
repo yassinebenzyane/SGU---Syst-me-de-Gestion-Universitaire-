@@ -14,6 +14,9 @@
 #include "../include/emploi_du_temps.h"
 #include "../include/menu.h"
 #include "../include/utils.h"
+#include "../include/annonces.h"
+#include "../include/notes.h"
+#include "../include/inscriptions.h"
 
 /**
  * Main function - Entry point of the application

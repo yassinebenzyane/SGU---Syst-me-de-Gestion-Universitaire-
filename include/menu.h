@@ -13,6 +13,9 @@
 #include "enseignant.h"
 #include "matiere.h"
 #include "emploi_du_temps.h"
+#include "annonces.h"
+#include "notes.h"
+#include "inscriptions.h"
 
 /**
  * @brief Display the admin menu and handle admin operations

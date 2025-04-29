@@ -1,0 +1,42 @@
+Avancement du Projet - Développement des Menus pour Tous les Rôles
+
+Objectif : Avancer le projet en développant les différents menus pour chaque type d'utilisateur tout en s'assurant que toutes les fonctionnalités soient incluses.
+
+Menus à Développer :
+
+Menu de l'Étudiant :
+
+Fonctionnalités :
+Consulter les Annonces : Afficher toutes les annonces importantes concernant les cours, examens, etc.
+Gestion des Notes : Permettre à l'étudiant de voir ses notes et d'accéder à ses résultats.
+Inscription aux Cours : Inscription ou désinscription aux différents cours offerts.
+Profil de l'Étudiant : Consultation et mise à jour des informations personnelles.
+Menu de l'Enseignant :
+
+Fonctionnalités :
+Création d'Annonces : Permettre aux enseignants de publier des annonces pour leurs cours.
+Gestion des Notes : Accès pour entrer et modifier les notes des étudiants.
+Suivi des Étudiants : Visualiser le progrès et l'engagement des étudiants.
+Gestion des Cours : Création et gestion des cours, y compris l'ajout de modules.
+Menu de l'Administrateur :
+
+Fonctionnalités :
+Gestion des Utilisateurs : Ajouter, modifier et supprimer des comptes pour les étudiants et les enseignants.
+Gestion des Cours : Surveiller et apporter des modifications aux cours proposés.
+Rapports : Génération de rapports sur les performances des étudiants et des enseignants.
+Paramètres Globaux : Configuration des paramètres du système (ex. : année scolaire, périodes d'inscription).
+Menu de Gestion du Système :
+
+Fonctionnalités :
+Authentification : Gestion des connexions et déconnexions des utilisateurs.
+Gestion des fichiers : Accès aux fichiers système et aux données administratives.
+Sauvegardes : Réalisation de sauvegardes des données critiques.
+Instructions pour l'Implémentation :
+
+Évaluer chaque menu pour s'assurer que toutes les fonctionnalités sont couvertes.
+Organiser le code de manière logique pour faciliter la maintenance future.
+Utiliser les fichiers .h et .c pour définir les fonctions nécessaires pour chaque fonctionnalité.
+Derniers Remarques :
+
+Ne pas oublier de tester chaque fonctionnalité après son développement.
+Documenter le code et créer un manuel d'utilisation si nécessaire.
