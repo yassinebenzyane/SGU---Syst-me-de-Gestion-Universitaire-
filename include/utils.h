@@ -97,4 +97,22 @@ int create_data_dir();
  */
 char* str_case_search(const char* haystack, const char* needle);
 
+/**
+ * @brief Check if an email already exists in the system
+ * @param email Email to check
+ * @return 1 if email exists, 0 otherwise
+ */
+int email_existe_deja(const char* email);
+
+/**
+ * @brief Generate a unique email address based on first name and last name
+ * @param prenom First name of the person
+ * @param nom Last name of the person
+ * @param est_etudiant 1 if the person is a student, 0 if teacher
+ * @param email_buffer Buffer to store the generated email
+ * @param size Size of the buffer
+ */
+void generer_email_unique(const char* prenom, const char* nom, int est_etudiant,
+                         char* email_buffer, size_t size);
+
 #endif /* UTILS_H */

@@ -10,6 +10,9 @@
 #include <string.h>
 #include <stdarg.h>
 
+#define ETUDIANTS_FILE "data/etudiants.txt"
+#define ENSEIGNANTS_FILE "data/enseignants.txt"
+
 /**
  * Clear the console screen
  */
@@ -283,4 +286,113 @@ char* str_case_search(const char* haystack, const char* needle) {
     }
     
     return NULL;  // No match found
+}
+
+/**
+ * Check if an email already exists in the system
+ */
+int email_existe_deja(const char* email) {
+    // The implementation will check if the email exists in both students and teachers files
+    FILE *file;
+    char line[256];
+    char line_copy[256];
+    
+    // Check in students file
+    file = fopen(ETUDIANTS_FILE, "r");
+    if (file != NULL) {
+        while (fgets(line, sizeof(line), file)) {
+            // Make a copy of the line because strtok modifies the string
+            strcpy(line_copy, line);
+            
+            // Parse the line (format: id|prenom|nom|email|cne|section|filiere)
+            char *token = strtok(line_copy, "|");  // id
+            if (!token) continue;
+            
+            token = strtok(NULL, "|");           // prenom
+            if (!token) continue;
+            
+            token = strtok(NULL, "|");           // nom
+            if (!token) continue;
+            
+            token = strtok(NULL, "|");           // email
+            if (token && strcmp(token, email) == 0) {
+                fclose(file);
+                return 1; // Email exists
+            }
+        }
+        fclose(file);
+    }
+    
+    // Check in teachers file
+    file = fopen(ENSEIGNANTS_FILE, "r");
+    if (file != NULL) {
+        while (fgets(line, sizeof(line), file)) {
+            // Make a copy of the line because strtok modifies the string
+            strcpy(line_copy, line);
+            
+            // Parse the line (format: id|prenom|nom|email|code_enseignant|matiere_enseignee)
+            char *token = strtok(line_copy, "|");  // id
+            if (!token) continue;
+            
+            token = strtok(NULL, "|");           // prenom
+            if (!token) continue;
+            
+            token = strtok(NULL, "|");           // nom
+            if (!token) continue;
+            
+            token = strtok(NULL, "|");           // email
+            if (token && strcmp(token, email) == 0) {
+                fclose(file);
+                return 1; // Email exists
+            }
+        }
+        fclose(file);
+    }
+    
+    return 0; // Email does not exist
+}
+
+/**
+ * Generate a unique email address based on first name and last name
+ */
+void generer_email_unique(const char* prenom, const char* nom, int est_etudiant,
+                         char* email_buffer, size_t size) {
+    // Make sure the buffer is clean
+    memset(email_buffer, 0, size);
+    
+    // Convert first name and last name to lowercase
+    char prenom_lower[50] = {0};
+    char nom_lower[50] = {0};
+    size_t prenom_len = strlen(prenom);
+    size_t nom_len = strlen(nom);
+    
+    for (size_t i = 0; i < prenom_len && i < sizeof(prenom_lower) - 1; i++) {
+        prenom_lower[i] = tolower((unsigned char)prenom[i]);
+    }
+    
+    for (size_t i = 0; i < nom_len && i < sizeof(nom_lower) - 1; i++) {
+        nom_lower[i] = tolower((unsigned char)nom[i]);
+    }
+    
+    // Determine the domain based on person type
+    const char* domain = est_etudiant ? "@edu.umi.ac.ma" : "@umi.ac.ma";
+    
+    // Try to generate email without counter first
+    snprintf(email_buffer, size, "%c.%s%s", prenom_lower[0], nom_lower, domain);
+    
+    // If email already exists, add a counter
+    int counter = 1;
+    char temp_email[100];
+    strncpy(temp_email, email_buffer, sizeof(temp_email) - 1);
+    
+    while (email_existe_deja(temp_email)) {
+        // Generate a new email with counter
+        snprintf(temp_email, sizeof(temp_email), "%c.%s%d%s", 
+                 prenom_lower[0], nom_lower, counter, domain);
+        counter++;
+    }
+    
+    // Copy the final unique email to the buffer
+    strncpy(email_buffer, temp_email, size - 1);
+    email_buffer[size - 1] = '\0'; // Ensure null termination
 }

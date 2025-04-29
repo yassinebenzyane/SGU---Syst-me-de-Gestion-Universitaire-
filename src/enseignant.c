@@ -114,17 +114,12 @@ void ajouter_enseignant(NodeEnseignant** tete) {
     get_input("Prénom: ", nouveau_node->enseignant.prenom, sizeof(nouveau_node->enseignant.prenom));
     get_input("Nom: ", nouveau_node->enseignant.nom, sizeof(nouveau_node->enseignant.nom));
     
-    // Email validation
+    // Generate automatic email based on first name and last name
     char email[50];
-    int valid_email = 0;
-    while (!valid_email) {
-        get_input("Email: ", email, sizeof(email));
-        if (validate_email(email)) {
-            valid_email = 1;
-        } else {
-            printf("Email invalide. Veuillez réessayer.\n");
-        }
-    }
+    generer_email_unique(nouveau_node->enseignant.prenom, nouveau_node->enseignant.nom, 0, 
+                       email, sizeof(email));
+    
+    printf("Email généré automatiquement: %s\n", email);
     strcpy(nouveau_node->enseignant.email, email);
     
     get_input("Code Enseignant: ", nouveau_node->enseignant.code_enseignant, 
@@ -192,13 +187,27 @@ void modifier_enseignant(NodeEnseignant* tete) {
         strcpy(enseignant->enseignant.nom, buffer);
     }
     
-    // Email validation
-    get_input_formatted("Email [actuel: %s]: ", buffer, sizeof(buffer), enseignant->enseignant.email);
-    if (strlen(buffer) > 0) {
-        if (validate_email(buffer)) {
-            strcpy(enseignant->enseignant.email, buffer);
-        } else {
-            printf("Email invalide. L'email n'a pas été modifié.\n");
+    // Ask whether to regenerate the email
+    printf("Souhaitez-vous régénérer l'email automatiquement?\n");
+    int regenerer_email = get_int_input("1. Oui, 2. Non: ", 1, 2);
+    
+    if (regenerer_email == 1) {
+        // Generate automatic email
+        char email[50];
+        generer_email_unique(enseignant->enseignant.prenom, enseignant->enseignant.nom, 0, 
+                          email, sizeof(email));
+        
+        printf("Email généré automatiquement: %s\n", email);
+        strcpy(enseignant->enseignant.email, email);
+    } else {
+        // Manual email entry
+        get_input_formatted("Email [actuel: %s]: ", buffer, sizeof(buffer), enseignant->enseignant.email);
+        if (strlen(buffer) > 0) {
+            if (validate_email(buffer)) {
+                strcpy(enseignant->enseignant.email, buffer);
+            } else {
+                printf("Email invalide. L'email n'a pas été modifié.\n");
+            }
         }
     }
     

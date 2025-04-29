@@ -1,1 +1,2 @@
 1|admin|admin|admin@ecole.com|admin123|admin
+2|youssef|ghanou|y.ghanou@gmail.com|youssef123|enseignant
