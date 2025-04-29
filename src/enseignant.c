@@ -56,7 +56,50 @@ int charger_enseignants(NodeEnseignant** tete) {
     }
     
     fclose(file);
+    
+    // Synchronize teacher IDs with user IDs
+    synchroniser_ids_enseignants(tete);
+    
     return 1;
+}
+
+/**
+ * Synchronize teacher IDs with user IDs based on email
+ */
+void synchroniser_ids_enseignants(NodeEnseignant** tete) {
+    // Load users
+    Utilisateur utilisateurs[MAX_USERS];
+    int nb_utilisateurs = 0;
+    
+    if (!charger_utilisateurs(utilisateurs, &nb_utilisateurs)) {
+        return;
+    }
+    
+    // For each teacher, find the corresponding user ID
+    NodeEnseignant* courant = *tete;
+    int synchronisation_effectuee = 0;
+    
+    while (courant != NULL) {
+        for (int i = 0; i < nb_utilisateurs; i++) {
+            // Compare emails to find the matching user
+            if (strcmp(courant->enseignant.email, utilisateurs[i].email) == 0 && 
+                strcmp(utilisateurs[i].role, "enseignant") == 0) {
+                
+                // If IDs don't match, update the teacher ID
+                if (courant->enseignant.id != utilisateurs[i].id) {
+                    courant->enseignant.id = utilisateurs[i].id;
+                    synchronisation_effectuee = 1;
+                }
+                break;
+            }
+        }
+        courant = courant->suivant;
+    }
+    
+    // If any ID was changed, save the changes to file
+    if (synchronisation_effectuee) {
+        sauvegarder_enseignants(*tete);
+    }
 }
 
 /**

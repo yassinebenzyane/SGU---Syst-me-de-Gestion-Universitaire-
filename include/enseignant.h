@@ -82,6 +82,12 @@ void afficher_enseignants(NodeEnseignant* tete);
 NodeEnseignant* trouver_enseignant_par_id(NodeEnseignant* tete, int id);
 
 /**
+ * @brief Synchronize teacher IDs with user IDs based on email
+ * @param tete Pointer to head of linked list
+ */
+void synchroniser_ids_enseignants(NodeEnseignant** tete);
+
+/**
  * @brief Search teachers by multiple criteria
  * @param tete Head of linked list
  */
