@@ -14,7 +14,7 @@
 #include "matiere.h"
 
 #define JOURS_PAR_SEMAINE 5
-#define CRENEAUX_PAR_JOUR 6
+#define CRENEAUX_PAR_JOUR 4
 #define MAX_SALLE_LEN 10
 
 /**

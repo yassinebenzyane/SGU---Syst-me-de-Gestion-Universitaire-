@@ -21,7 +21,7 @@ const char* jour_to_string(int jour) {
 
 // Helper function to convert hour number to string
 const char* heure_to_string(int heure) {
-    static const char* heures[] = {"8h-10h", "10h-12h", "14h-16h", "16h-18h", "18h-20h", "20h-22h"};
+    static const char* heures[] = {"8h-10h", "10h-12h", "14h-16h", "16h-18h"};
     
     if (heure >= 0 && heure < CRENEAUX_PAR_JOUR) {
         return heures[heure];
@@ -218,7 +218,7 @@ void ajouter_creneau(EmploiDuTemps *edt, NodeEnseignant* enseignants, NodeMatier
     int jour = get_int_input("Jour (0: Lundi, 1: Mardi, 2: Mercredi, 3: Jeudi, 4: Vendredi): ", 
                            0, JOURS_PAR_SEMAINE - 1);
     
-    int heure = get_int_input("Heure (0: 8h-10h, 1: 10h-12h, 2: 14h-16h, 3: 16h-18h, 4: 18h-20h, 5: 20h-22h): ", 
+    int heure = get_int_input("Heure (0: 8h-10h, 1: 10h-12h, 2: 14h-16h, 3: 16h-18h): ", 
                             0, CRENEAUX_PAR_JOUR - 1);
     
     // Check if the slot is already occupied
@@ -303,7 +303,7 @@ void modifier_creneau(EmploiDuTemps *edt, NodeEnseignant* enseignants, NodeMatie
     int jour = get_int_input("Jour du créneau à modifier (0: Lundi, 1: Mardi, 2: Mercredi, 3: Jeudi, 4: Vendredi): ", 
                            0, JOURS_PAR_SEMAINE - 1);
     
-    int heure = get_int_input("Heure du créneau à modifier (0: 8h-10h, 1: 10h-12h, 2: 14h-16h, 3: 16h-18h, 4: 18h-20h, 5: 20h-22h): ", 
+    int heure = get_int_input("Heure du créneau à modifier (0: 8h-10h, 1: 10h-12h, 2: 14h-16h, 3: 16h-18h): ", 
                             0, CRENEAUX_PAR_JOUR - 1);
     
     // Check if the slot exists
@@ -390,7 +390,7 @@ void supprimer_creneau(EmploiDuTemps *edt) {
     int jour = get_int_input("Jour du créneau à supprimer (0: Lundi, 1: Mardi, 2: Mercredi, 3: Jeudi, 4: Vendredi): ", 
                            0, JOURS_PAR_SEMAINE - 1);
     
-    int heure = get_int_input("Heure du créneau à supprimer (0: 8h-10h, 1: 10h-12h, 2: 14h-16h, 3: 16h-18h, 4: 18h-20h, 5: 20h-22h): ", 
+    int heure = get_int_input("Heure du créneau à supprimer (0: 8h-10h, 1: 10h-12h, 2: 14h-16h, 3: 16h-18h): ", 
                             0, CRENEAUX_PAR_JOUR - 1);
     
     // Check if the slot exists
