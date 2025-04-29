@@ -1,0 +1,39 @@
+modules = ["c"]
+
+[nix]
+channel = "stable-24_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "School Management System"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "build_and_run"
+
+[[workflows.workflow]]
+name = "School Management System"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "make && ./bin/school_management"
+
+[[workflows.workflow]]
+name = "build_and_run"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "make && ./bin/school_management"
+
+[deployment]
+run = ["sh", "-c", "make && ./bin/school_management"]

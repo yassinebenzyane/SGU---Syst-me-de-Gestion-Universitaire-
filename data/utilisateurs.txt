@@ -1,0 +1,1 @@
+1|admin|admin|admin@ecole.com|admin123|admin
