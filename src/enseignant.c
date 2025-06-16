@@ -114,6 +114,7 @@ int sauvegarder_enseignants(NodeEnseignant* tete) {
     
     NodeEnseignant* courant = tete;
     while (courant != NULL) {
+        if (courant->enseignant.id>0){
         fprintf(file, "%d|%s|%s|%s|%s|%s\n",
                 courant->enseignant.id,
                 courant->enseignant.prenom,
@@ -121,8 +122,9 @@ int sauvegarder_enseignants(NodeEnseignant* tete) {
                 courant->enseignant.email,
                 courant->enseignant.code_enseignant,
                 courant->enseignant.matiere_enseignee);
-        
+        }
         courant = courant->suivant;
+        
     }
     
     fclose(file);
@@ -140,17 +142,9 @@ void ajouter_enseignant(NodeEnseignant** tete) {
     }
     
     // Generate a new ID
-    int new_id = 1;
-    NodeEnseignant *courant = *tete;
-    while (courant != NULL) {
-        if (courant->enseignant.id >= new_id) {
-            new_id = courant->enseignant.id + 1;
-        }
-        courant = courant->suivant;
-    }
-    
+    int new_id = generate_id();
     nouveau_node->enseignant.id = new_id;
-    
+        
     // Get teacher details
     printf("\n=== Ajouter un nouvel enseignant ===\n");
     
@@ -179,7 +173,8 @@ void ajouter_enseignant(NodeEnseignant** tete) {
         printf("Enseignant ajouté avec succès.\n");
         
         // Create user account
-        ajouter_utilisateur_auto(nouveau_node->enseignant.prenom, 
+        ajouter_utilisateur_auto(new_id,
+                             nouveau_node->enseignant.prenom, 
                              nouveau_node->enseignant.nom, 
                              nouveau_node->enseignant.email, 
                              "enseignant");

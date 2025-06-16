@@ -188,20 +188,7 @@ int create_file_if_not_exists(const char *filename) {
     return 1;
 }
 
-/**
- * Generate a random ID
- */
-int generate_id() {
-    // Initialize random seed
-    static int initialized = 0;
-    if (!initialized) {
-        srand(time(NULL));
-        initialized = 1;
-    }
-    
-    // Generate a random ID between 1000 and 9999
-    return 1000 + rand() % 9000;
-}
+
 
 /**
  * Validate an email address format
@@ -380,7 +367,7 @@ void generer_email_unique(const char* prenom, const char* nom, int est_etudiant,
     // Try to generate email without counter first
     snprintf(email_buffer, size, "%c.%s%s", prenom_lower[0], nom_lower, domain);
     
-    // If email already exists, add a counter
+    // If email already exists add a counter
     int counter = 1;
     char temp_email[100];
     strncpy(temp_email, email_buffer, sizeof(temp_email) - 1);
@@ -395,4 +382,41 @@ void generer_email_unique(const char* prenom, const char* nom, int est_etudiant,
     // Copy the final unique email to the buffer
     strncpy(email_buffer, temp_email, size - 1);
     email_buffer[size - 1] = '\0'; // Ensure null termination
+}
+
+
+
+int charger_derniere_id() {
+    FILE *file = fopen("data/enseignants.txt", "r");
+    if (file == NULL) {
+        return 0; // Retourne 0 si le fichier n'existe pas ou ne peut pas être ouvert
+    }
+
+    int last_id = 0;
+    char line[256];
+
+    // Lire chaque ligne pour trouver le dernier ID
+    while (fgets(line, sizeof(line), file)) {
+        int id;
+        sscanf(line, "%d|", &id); // Extraire l'ID de la ligne
+        if (id > last_id) {
+            last_id = id; // Mettre à jour le dernier ID
+        }
+    }
+
+    fclose(file);
+    return last_id;
+}
+
+
+int generate_id() {
+    static int last_id = 0; // Initialisé à 0
+
+    // Charger le dernier ID à partir du fichier si ce n'est pas déjà fait
+    if (last_id == 0) {
+        last_id = charger_derniere_id(); // Charger le dernier ID
+    }
+
+    last_id++; // Incrémente l'ID
+    return last_id; // Retourne le nouvel ID
 }

@@ -179,7 +179,7 @@ void menu_gestion_annonces_enseignant(NodeAnnonce** annonces, int id_enseignant)
                 pause_screen();
                 break;
             case 3:
-                ajouter_annonce(annonces, id_enseignant, NULL);
+                ajouter_annonce(annonces, id_enseignant);
                 pause_screen();
                 break;
             case 4:

@@ -123,7 +123,7 @@ void afficher_infos_utilisateur(int id, char *role, char *prenom, char *nom) {
 /**
  * Automatically add a new user
  */
-void ajouter_utilisateur_auto(const char *prenom, const char *nom, const char *email, const char *role) {
+void ajouter_utilisateur_auto(const int id,const char *prenom, const char *nom, const char *email, const char *role) {
     Utilisateur utilisateurs[MAX_USERS];
     int nb_utilisateurs = 0;
     
@@ -146,12 +146,7 @@ void ajouter_utilisateur_auto(const char *prenom, const char *nom, const char *e
     }
     
     // Generate a new ID
-    int new_id = 1;
-    for (int i = 0; i < nb_utilisateurs; i++) {
-        if (utilisateurs[i].id >= new_id) {
-            new_id = utilisateurs[i].id + 1;
-        }
-    }
+    int new_id = id;
     
     // Add the new user
     Utilisateur new_user;

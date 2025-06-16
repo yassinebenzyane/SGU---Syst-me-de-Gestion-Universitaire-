@@ -97,50 +97,33 @@ void ajouter_etudiant(NodeEtudiant** tete) {
         printf("Erreur: Échec d'allocation de mémoire.\n");
         return;
     }
-    
-    // Generate a new ID
-    int new_id = 1;
-    NodeEtudiant *courant = *tete;
-    while (courant != NULL) {
-        if (courant->etudiant.id >= new_id) {
-            new_id = courant->etudiant.id + 1;
-        }
-        courant = courant->suivant;
-    }
-    
-    nouveau_node->etudiant.id = new_id;
-    
-    // Get student details
+
+    // Générer un nouvel ID
+    int new_id = generate_id(); // Utiliser une fonction pour générer un ID unique
+    nouveau_node->etudiant.id= new_id;
+    // Obtenir les détails de l'étudiant
     printf("\n=== Ajouter un nouvel étudiant ===\n");
-    
     get_input("Prénom: ", nouveau_node->etudiant.prenom, sizeof(nouveau_node->etudiant.prenom));
     get_input("Nom: ", nouveau_node->etudiant.nom, sizeof(nouveau_node->etudiant.nom));
-    
-    // Generate automatic email based on first name and last name
+
+    // Générer un email automatique
     char email[50];
-    generer_email_unique(nouveau_node->etudiant.prenom, nouveau_node->etudiant.nom, 1, 
-                        email, sizeof(email));
-    
+    generer_email_unique(nouveau_node->etudiant.prenom, nouveau_node->etudiant.nom, 1, email, sizeof(email));
     printf("Email généré automatiquement: %s\n", email);
     strcpy(nouveau_node->etudiant.email, email);
-    
+
     get_input("CNE: ", nouveau_node->etudiant.cne, sizeof(nouveau_node->etudiant.cne));
     get_input("Section: ", nouveau_node->etudiant.section, sizeof(nouveau_node->etudiant.section));
     get_input("Filière: ", nouveau_node->etudiant.filiere, sizeof(nouveau_node->etudiant.filiere));
-    
-    // Add to the beginning of the list
+
+    // Ajouter au début de la liste
     nouveau_node->suivant = *tete;
     *tete = nouveau_node;
-    
-    // Save to file
+
+    // Sauvegarder dans le fichier
     if (sauvegarder_etudiants(*tete)) {
         printf("Étudiant ajouté avec succès.\n");
-        
-        // Create user account
-        ajouter_utilisateur_auto(nouveau_node->etudiant.prenom, 
-                             nouveau_node->etudiant.nom, 
-                             nouveau_node->etudiant.email, 
-                             "etudiant");
+        ajouter_utilisateur_auto(new_id,nouveau_node->etudiant.prenom, nouveau_node->etudiant.nom, nouveau_node->etudiant.email, "etudiant");
     } else {
         printf("Erreur lors de la sauvegarde des étudiants.\n");
     }

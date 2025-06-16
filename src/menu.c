@@ -59,6 +59,7 @@ void menu_admin(Utilisateur utilisateurs[], int *nb_utilisateurs,
                             pause_screen();
                             break;
                         case 2: {
+                            int new_id=generate_id();
                             char prenom[50], nom[50], email[50], role[20];
                             
                             printf("\n=== Ajouter un nouvel utilisateur ===\n");
@@ -111,7 +112,7 @@ void menu_admin(Utilisateur utilisateurs[], int *nb_utilisateurs,
                                 }
                             }
                             
-                            ajouter_utilisateur_auto(prenom, nom, email, role);
+                            ajouter_utilisateur_auto(new_id,prenom, nom, email, role);
                             pause_screen();
                             break;
                         }
@@ -246,7 +247,7 @@ void menu_admin(Utilisateur utilisateurs[], int *nb_utilisateurs,
                     clear_screen();
                     printf("\n=== Gestion de l'Emploi du Temps ===\n");
                     printf("1. Afficher l'emploi du temps\n");
-                    printf("2. Générer un emploi du temps automatique\n");
+                    printf("2. Générer un emploi du temps\n");
                     printf("3. Ajouter un créneau\n");
                     printf("4. Modifier un créneau\n");
                     printf("5. Supprimer un créneau\n");
@@ -260,8 +261,8 @@ void menu_admin(Utilisateur utilisateurs[], int *nb_utilisateurs,
                             pause_screen();
                             break;
                         case 2:
-                            generer_emploi_du_temps(edt, *enseignants, *matieres);
-                            pause_screen();
+                        creation_manuelle_emploi_du_temps(edt,  *enseignants) ;
+                            pause_screen();                          
                             break;
                         case 3:
                             ajouter_creneau(edt, *enseignants, *matieres);
@@ -300,7 +301,7 @@ void menu_admin(Utilisateur utilisateurs[], int *nb_utilisateurs,
                             break;
                         case 2:
                             // Admin creates announcement as admin, not linked to teacher
-                            ajouter_annonce(&annonces, -1, NULL); // Use -1 to indicate admin
+                            ajouter_annonce(&annonces, -1); // Use -1 to indicate admin
                             pause_screen();
                             break;
                         case 3: {
@@ -808,7 +809,7 @@ void menu_enseignant(int id_enseignant, NodeEtudiant* etudiants,
                             pause_screen();
                             break;
                         case 3:
-                            ajouter_annonce(&annonces, id_enseignant, NULL);
+                            ajouter_annonce(&annonces, id_enseignant);
                             pause_screen();
                             break;
                         case 4:

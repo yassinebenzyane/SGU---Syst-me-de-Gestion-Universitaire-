@@ -1,0 +1,12 @@
+7|hhh|bjr
+|Enseignant ID: -1|21/05/2025 16:38|0|-1
+6|exam|fdnyzdrghhdgzudnby fin
+|||0|0
+0|||||0|0
+0|16/05/2025 19:14|0|6
+||0|0
+1|Annonce 1|Contenu de l'annonce 1|Amina Adadi|01/05/2025|1|4
+2|Annonce 2|Contenu de l'annonce 2|Ibrahim Fedany|02/05/2025|2|5
+3|Annonce 3|Contenu de l'annonce 3|Youssef Ghanou|03/05/2025|3|6
+4|Annonce 4|Contenu de l'annonce 4|Maria Benamar|04/05/2025|4|7
+5|Annonce 5|Contenu de l'annonce 5|Lucas Martin|05/05/2025|5|8

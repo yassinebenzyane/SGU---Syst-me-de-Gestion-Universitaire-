@@ -1,1 +1,6 @@
-1|python@123|python|4.00
+1|python@123|Python|4.00
+2|web@123|Développement Web|3.00
+3|progC@123|Programmation C|5.00
+4|math@123|Mathématiques|4.50
+5|physique@123|Physique|3.50
+6|anglais@123|Anglais|2.00

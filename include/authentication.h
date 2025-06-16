@@ -73,8 +73,7 @@ void afficher_infos_utilisateur(int id, char *role, char *prenom, char *nom);
  * @param email User email
  * @param role User role
  */
-void ajouter_utilisateur_auto(const char *prenom, const char *nom, const char *email, const char *role);
-
+void ajouter_utilisateur_auto(const int id,const char *prenom, const char *nom, const char *email, const char *role) ;
 /**
  * @brief Display all users (admin only)
  */

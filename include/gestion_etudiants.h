@@ -36,6 +36,8 @@ void afficher_rapport_etudiant(NodeEtudiant* etudiants, NodeNote* notes, NodeIns
  * @param inscriptions Pointer to the list of course registrations
  * @param id_etudiant ID of the student
  */
-void menu_inscriptions_etudiant(NodeInscription** inscriptions, int id_etudiant);
+void menu_inscriptions_etudiant(NodeInscription **inscriptions, int id_etudiant);
+
+void NewFunction();
 
 #endif /* GESTION_ETUDIANTS_H */

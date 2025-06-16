@@ -37,3 +37,5 @@ cleandata:
 	rm -rf data/*.txt
 
 .PHONY: all clean cleandata directories
+run: all
+	./$(EXEC)

@@ -1,2 +1,5 @@
-2|youssef|ghanou|y.ghanou@gmail.com|sadas|python
-4|amina|adadi|a.adadi@umi.ac.ma|A789|Python
+8|Achraf|haibi|a.haibi1@umi.ac.ma|A65456|Structure de donnees 
+6|youssef|ghanou|y.ghanou@umi.ac.ma|Y01375|Prog C
+5|ibrahim|fedany|i.fedany@umi.ac.ma|B2301|Web
+4|amina|adadi|a.adadi@umi.ac.ma|A1243|python
+7|maria|benamar|m.benamar@umi.ac.ma|M22365|Linux

@@ -114,5 +114,6 @@ int email_existe_deja(const char* email);
  */
 void generer_email_unique(const char* prenom, const char* nom, int est_etudiant,
                          char* email_buffer, size_t size);
-
+                         
+int charger_derniere_id() ;
 #endif /* UTILS_H */

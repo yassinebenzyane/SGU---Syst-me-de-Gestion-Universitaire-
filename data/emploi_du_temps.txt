@@ -1,0 +1,7 @@
+1|6|Anglais|6|youssef ghanou|S1|0|0
+2|5|Physique|5|ibrahim fedany|S1|0|1
+3|4|Mathématiques|4|amina adadi|S1|0|2
+4|3|Programmation C|7|maria benamar|S1|0|3
+5|2|Développement Web|6|youssef ghanou|S2|1|0
+6|1|Python|5|ibrahim fedany|S2|1|1
+7|6|Anglais|8|Achraf haibi||3|0

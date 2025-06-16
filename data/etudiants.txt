@@ -1,1 +1,5 @@
-1|ilyass|benradi|i.benradi@edu.umi.ac.ma|M130044714|1|GI
+2|john|doe|john.doe@edu.umi.ac.ma|E145126646|1|GI
+3|jane|smith|jane.smith@edu.umi.ac.ma|E145126647|1|GI
+4|paul|martin|paul.martin@edu.umi.ac.ma|E145126648|1|GI
+5|luc|dupont|luc.dupont@edu.umi.ac.ma|E145126649|1|GI
+6|sophie|durand|sophie.durand@edu.umi.ac.ma|E145126650|1|GI

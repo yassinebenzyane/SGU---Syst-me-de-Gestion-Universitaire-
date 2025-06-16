@@ -450,15 +450,6 @@ void afficher_notes_par_matiere(NodeNote* tete, int id_matiere) {
 }
 
 /**
- * Display grades by teacher ID
- */
-void afficher_notes_par_enseignant(NodeNote* tete, int id_enseignant) {
-    // In a real app, you'd first retrieve the list of subjects taught by this teacher
-    // and then show the grades for those subjects
-    printf("Fonctionnalité à implémenter: afficher les notes des matières enseignées par l'enseignant ID %d\n", id_enseignant);
-}
-
-/**
  * Calculate the average grade for a student across all subjects
  */
 float calculer_moyenne_etudiant(NodeNote* tete, int id_etudiant) {

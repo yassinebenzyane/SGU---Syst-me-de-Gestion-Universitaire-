@@ -120,80 +120,78 @@ int sauvegarder_emploi_du_temps(const EmploiDuTemps *edt) {
 /**
  * Generate an automatic timetable
  */
-void generer_emploi_du_temps(EmploiDuTemps *edt, NodeEnseignant* enseignants, NodeMatiere* matieres) {
-    // Initialize the timetable
+// Fonction pour créer manuellement l'emploi du temps
+void creation_manuelle_emploi_du_temps(EmploiDuTemps *edt, NodeEnseignant* enseignants) {
+    // Initialiser l'emploi du temps
     initialiser_emploi_du_temps(edt);
     
-    printf("\n=== Génération automatique de l'emploi du temps ===\n");
+    printf("\n=== Création Manuelle de l'Emploi du Temps ===\n");
     
-    // Count the number of subjects and teachers
-    int nb_matieres = 0;
-    NodeMatiere* courant_matiere = matieres;
-    while (courant_matiere != NULL) {
-        nb_matieres++;
-        courant_matiere = courant_matiere->suivant;
-    }
-    
-    int nb_enseignants = 0;
-    NodeEnseignant* courant_enseignant = enseignants;
-    while (courant_enseignant != NULL) {
-        nb_enseignants++;
-        courant_enseignant = courant_enseignant->suivant;
-    }
-    
-    if (nb_matieres == 0 || nb_enseignants == 0) {
-        printf("Erreur: Il faut au moins une matière et un enseignant pour générer un emploi du temps.\n");
-        return;
-    }
-    
-    // Generate a simple timetable - each subject gets one slot
-    // Distribute evenly across the week
-    int id_creneau = 1;
-    int i_matiere = 0;
-    int i_enseignant = 0;
-    
-    courant_matiere = matieres;
-    courant_enseignant = enseignants;
-    
-    // Loop through days and hours
-    for (int jour = 0; jour < JOURS_PAR_SEMAINE && courant_matiere != NULL; jour++) {
-        for (int heure = 0; heure < CRENEAUX_PAR_JOUR && courant_matiere != NULL; heure++) {
-            // Get current matiere and enseignant
-            Matiere matiere = courant_matiere->matiere;
-            courant_matiere = courant_matiere->suivant;
+    for (int i = 0; i < JOURS_PAR_SEMAINE; i++) {
+        for (int j = 0; j < CRENEAUX_PAR_JOUR; j++) {
+            printf("\nSélectionnez le jour (0: Lundi, 1: Mardi, 2: Mercredi, 3: Jeudi, 4: Vendredi): ");
+            int jour = get_int_input("Jour: ", 0, JOURS_PAR_SEMAINE - 1);
+            printf("Sélectionnez l'heure (0: 8h-10h, 1: 10h-12h, 2: 14h-16h, 3: 16h-18h): ");
+            int heure = get_int_input("Heure: ", 0, CRENEAUX_PAR_JOUR - 1);
             
-            Enseignant enseignant = courant_enseignant->enseignant;
-            courant_enseignant = courant_enseignant->suivant;
-            if (courant_enseignant == NULL) {
-                courant_enseignant = enseignants; // Cycle back to first teacher
+            // Vérification de la disponibilité du créneau
+            if (edt->creneaux[jour][heure].id != 0) {
+                printf("⚠️ Ce créneau est déjà occupé par %s (%s).\n", 
+                       edt->creneaux[jour][heure].nom_enseignant, 
+                       edt->creneaux[jour][heure].nom_matiere);
+                continue; // Passer au créneau suivant
             }
             
-            // Create a new slot
+            // Afficher la liste des enseignants
+            afficher_enseignants(enseignants); // Fonction pour afficher tous les enseignants
+            
+            // Saisie du nom de l'enseignant
+            char nom_enseignant[50];
+            get_input("Nom de l'enseignant: ", nom_enseignant, sizeof(nom_enseignant));
+            
+            // Remplissage automatique de la matière
+            NodeEnseignant* enseignant = trouver_enseignant_par_id(enseignants, nom_enseignant);
+            if (enseignant == NULL) {
+                printf("❌ Matière introuvable pour cet enseignant. Opération annulée.\n");
+                continue; // Passer au créneau suivant
+            }
+            
+            // Saisie de la section
+            char section[20];
+            get_input("Section: ", section, sizeof(section));
+            
+            // Saisie du type de séance
+            char type_seance[20];
+            get_input("Type de séance (TP ou Cours): ", type_seance, sizeof(type_seance));
+            
+            // Saisie de la salle
+            char salle[MAX_SALLE_LEN];
+            get_input("Salle: ", salle, sizeof(salle));
+            
+            // Enregistrement du créneau
             Creneau creneau;
-            creneau.id = id_creneau++;
-            creneau.id_matiere = matiere.id;
-            strcpy(creneau.nom_matiere, matiere.nom_matiere);
-            creneau.id_enseignant = enseignant.id;
-            snprintf(creneau.nom_enseignant, sizeof(creneau.nom_enseignant), 
-                    "%s %s", enseignant.prenom, enseignant.nom);
-            sprintf(creneau.salle, "S%d", jour + 1); // Simple room allocation
+            creneau.id = generate_id(); // Générer un nouvel ID
+            creneau.id_matiere = enseignant->enseignant.id; // Associer la matière
+            strcpy(creneau.nom_matiere, enseignant->enseignant.matiere_enseignee);
+            creneau.id_enseignant = enseignant->enseignant.id;
+            strcpy(creneau.nom_enseignant, enseignant->enseignant.prenom);
+            strcpy(creneau.salle, salle);
             creneau.jour = jour;
             creneau.heure = heure;
             
-            // Add to timetable
+            // Ajouter le créneau à l'emploi du temps
             edt->creneaux[jour][heure] = creneau;
             edt->nb_creneaux++;
         }
     }
     
-    // Save the generated timetable
+    // Sauvegarder l'emploi du temps
     if (sauvegarder_emploi_du_temps(edt)) {
-        printf("Emploi du temps généré avec succès.\n");
+        printf("Emploi du temps créé avec succès.\n");
     } else {
         printf("Erreur lors de la sauvegarde de l'emploi du temps.\n");
     }
 }
-
 /**
  * Add a new slot to the timetable
  */
